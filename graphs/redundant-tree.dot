@@ -1,0 +1,21 @@
+digraph redundant_tree {
+    graph [rankdir=BT];
+    node [style=filled];
+    nodesep=1.1;
+
+    a_1 [label="b", shape="square"];
+    b_1 [label="a", shape="square"];
+    add_a_b_1 [label="+"];
+    {a_1 b_1} -> add_a_b_1;
+
+    a_2 [label="b", shape="square"];
+    b_2 [label="a", shape="square"];
+    add_a_b_2 [label="+"];
+    {a_2 b_2} -> add_a_b_2;
+
+    add_subs [label="+"];
+    {add_a_b_1 add_a_b_2} -> add_subs;
+
+    result [label="result", shape="square"];
+    add_subs -> result;
+}

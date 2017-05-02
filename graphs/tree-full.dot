@@ -1,0 +1,20 @@
+digraph tree_full {
+    graph [rankdir=BT];
+    node [style=filled];
+    nodesep=1.1;
+
+    _1 [label="1", shape="square"];
+    _2 [label="2", shape="square"];
+    add_1_2 [label="f"];
+    {_1 _2} -> add_1_2;
+
+    a [label="a", shape="square"];
+    add_1_2 -> a;
+
+    _3 [label="3", shape="square"];
+    add_a_3 [label="f"];
+    {a _3} -> add_a_3;
+
+    b [shape="square"];
+    add_a_3 -> b;
+}

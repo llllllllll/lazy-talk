@@ -1,0 +1,14 @@
+digraph tree_computed {
+    graph [rankdir=BT];
+    node [style=filled];
+    nodesep=1.1;
+
+    a [label="a = 3", shape="square"];
+
+    _3 [label="3", shape="square"];
+    add_a_3 [label="f"];
+    {a _3} -> add_a_3;
+
+    b [shape="square"];
+    add_a_3 -> b;
+}

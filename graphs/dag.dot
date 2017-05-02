@@ -1,0 +1,18 @@
+digraph dag {
+    graph [rankdir=BT];
+    node [style=filled];
+    nodesep=1.1;
+
+    a [label="b", shape="square"];
+    b [label="a", shape="square"];
+    add_a_b [label="+"];
+    {a b} -> add_a_b;
+
+
+    add_subs [label="+"];
+    add_a_b -> add_subs;
+    add_a_b -> add_subs;
+
+    result [label="result", shape="square"];
+    add_subs -> result;
+}
