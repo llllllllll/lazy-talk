@@ -5,11 +5,11 @@ digraph dag {
 
     a [label="b", shape="square"];
     b [label="a", shape="square"];
-    add_a_b [label="+"];
+    add_a_b [label="f"];
     {a b} -> add_a_b;
 
 
-    add_subs [label="+"];
+    add_subs [label="f"];
     add_a_b -> add_subs;
     add_a_b -> add_subs;
 

@@ -1,0 +1,15 @@
+digraph fib_good {
+    graph [rankdir=BT];
+    node [style=filled];
+    nodesep=1.1;
+
+    fib_5 [label="fib(5)"];
+    fib_4 [label="fib(4)"];
+    fib_3 [label="fib(3)"];
+    fib_2 [label="fib(2)", shape="square"];
+    fib_1 [label="fib(1)", shape="square"];
+
+    {fib_1 fib_2} -> fib_3
+    {fib_2 fib_3} -> fib_4
+    {fib_3 fib_4} -> fib_5
+}

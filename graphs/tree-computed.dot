@@ -5,10 +5,10 @@ digraph tree_computed {
 
     a [label="a = 3", shape="square"];
 
-    _3 [label="3", shape="square"];
-    add_a_3 [label="f"];
-    {a _3} -> add_a_3;
+    _4 [label="4", shape="square"];
+    add_a_4 [label="f"];
+    {a _4} -> add_a_4;
 
     b [shape="square"];
-    add_a_3 -> b;
+    add_a_4 -> b;
 }

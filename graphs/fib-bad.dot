@@ -1,0 +1,26 @@
+digraph fib_bad {
+    graph [rankdir=BT];
+    node [style=filled];
+    nodesep=1.1;
+
+    fib_5 [label="fib(5)"];
+    fib_4 [label="fib(4)"];
+    fib_3_0 [label="fib(3)"];
+
+    {fib_4 fib_3_0} -> fib_5
+
+    fib_3_1 [label="fib(3)"];
+    fib_2_0 [label="fib(2)", shape="square"];
+
+    {fib_3_1 fib_2_0} -> fib_4
+
+    fib_2_1 [label="fib(2)", shape="square"];
+    fib_1_0 [label="fib(1)", shape="square"];
+
+    {fib_2_1 fib_1_0} -> fib_3_1
+
+    fib_2_2 [label="fib(2)", shape="square"];
+    fib_1_1 [label="fib(1)", shape="square"];
+
+    {fib_2_2 fib_1_1} -> fib_3_0
+}

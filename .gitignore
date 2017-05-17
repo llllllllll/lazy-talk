@@ -1,3 +1,15 @@
 .ipynb_checkpoints/
 
-presentation.slides.html
+slides.aux
+slides.log
+slides.nav
+slides.out
+slides.snm
+slides.toc
+slides.vrb
+slides.pdf
+
+auto/*
+_minted-slides/*
+
+graphs/*.png

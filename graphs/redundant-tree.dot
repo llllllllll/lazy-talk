@@ -5,15 +5,15 @@ digraph redundant_tree {
 
     a_1 [label="b", shape="square"];
     b_1 [label="a", shape="square"];
-    add_a_b_1 [label="+"];
+    add_a_b_1 [label="f"];
     {a_1 b_1} -> add_a_b_1;
 
     a_2 [label="b", shape="square"];
     b_2 [label="a", shape="square"];
-    add_a_b_2 [label="+"];
+    add_a_b_2 [label="f"];
     {a_2 b_2} -> add_a_b_2;
 
-    add_subs [label="+"];
+    add_subs [label="f"];
     {add_a_b_1 add_a_b_2} -> add_subs;
 
     result [label="result", shape="square"];
