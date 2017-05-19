@@ -49,8 +49,7 @@ calling f with a=3, b=4
   \begin{definition}[Eager Evaluation]
     \begin{itemize}
     \item[]<2-> Evaluate expressions as they appear in source.
-    \item[]<3-> Evaluate expressions inner-most first.
-    \item[]<4-> Expressions immediately evaluate to a concrete value.
+    \item[]<3-> Expressions immediately evaluate to a concrete value.
     \end{itemize}
   \end{definition}
 \end{frame}
@@ -70,10 +69,9 @@ calling f with a=3, b=4
 \begin{frame}{Lazy Evaluation}
   \begin{definition}[Lazy Evaluation]
     \begin{itemize}
-    \item[]<2-> Evaluate expressions as their result is needed.
-    \item[]<3-> Evaluate expressions outer-most first.
-    \item[]<4-> Expressions must be \textbf{pure}.
-    \item[]<5-> Expressions produce \textbf{thunks}.
+    \item[]<2-> Expressions must be \textbf{pure}.
+    \item[]<3-> Evaluate expressions when their result is needed.
+    \item[]<4-> Expressions produce \textbf{thunks}.
     \end{itemize}
   \end{definition}
 \end{frame}
@@ -81,7 +79,7 @@ calling f with a=3, b=4
 \begin{frame}{Lazy Evaluation}
   \begin{definition}[Thunk]
     \begin{itemize}
-    \item[]<2-> Represents a computation which may or may not be evaluated.
+    \item[]<2-> Represents a computation.
     \item[]<3-> Term of art.
     \item[]<4-> Also known as a \textbf{closure}.
     \end{itemize}
@@ -126,7 +124,7 @@ calling f with a=3, b=4
 
 \begin{frame}{Expressions as Trees}
   \begin{center}
-    \includegraphics[height=0.75\textheight]{graphs/tree-full.png}
+    \includegraphics[height=0.65\textheight]{graphs/tree-full.png}
   \end{center}
 \end{frame}
 
@@ -141,7 +139,7 @@ calling f with a=3, b=4
     \item[]<1-> \begin{minted}{python}
 >>> a = 1
 >>> b = 2
->>> sub_expression = f(a, b)
+>>> sub_expression = lambda: f(a, b)
     \end{minted}
   \item[]<2-> \begin{minted}{python}
 >>> value = lambda: f(
@@ -153,7 +151,7 @@ calling f with a=3, b=4
 >>> value()
 calling f with a=1, b=2
 calling f with a=1, b=2
-falling f with a=3, b=3
+calling f with a=3, b=3
 6
     \end{minted}
   \end{itemize}
@@ -190,7 +188,7 @@ lambda: f(a, b)
   \begin{definition}[Memoize]
     \begin{itemize}
     \item[]<2-> Remembering the result of a computation.
-    \item[]<3-> Repeated access to an expression can return instantly.
+    \item[]<3-> Expressions are computed at most once.
     \item[]<4-> Requires pure functions.
     \end{itemize}
   \end{definition}
@@ -202,7 +200,11 @@ class Thunk(metaclass=ABCMeta):
     @abstractmethod
     def __call__(self):
         raise NotImplementedError()
+  \end{minted}
+\end{frame}
 
+\begin{frame}[fragile]{Evaluating Thunks}
+  \begin{minted}{python}
 def evaluate(expr):
     while isinstance(expr, Thunk):
         expr = expr()
@@ -245,8 +247,8 @@ def __call__(self):
 \begin{frame}[fragile]{Cell Thunks}
   \begin{itemize}
   \item[]<1-> \begin{minted}{python}
->>> a = CellThunk(1)
->>> b = CellThunk(2)
+>>> a = 1
+>>> b = 2
     \end{minted}
   \item[]<2-> \begin{minted}{python}
 >>> sub_expression = CellThunk(f, a, b)
@@ -256,7 +258,7 @@ def __call__(self):
 ...     f,
 ...     sub_expression,
 ...     sub_expression,
-)
+... )
     \end{minted}
   \item[]<4-> \begin{minted}{python}
 >>> value()
@@ -310,8 +312,8 @@ class SelfUpdatingThunk:
 \begin{frame}[fragile]{Self Updating Thunks}
   \begin{itemize}
   \item[]<1-> \begin{minted}{python}
->>> a = SelfUpdatingThunk(1)
->>> b = SelfUpdatingThunk(2)
+>>> a = 1
+>>> b = 2
     \end{minted}
   \item[]<2-> \begin{minted}{python}
 >>> sub_expression = SelfUpdatingThunk(f, a, b)
@@ -321,7 +323,7 @@ class SelfUpdatingThunk:
 ...     f,
 ...     sub_expression,
 ...     sub_expression,
-)
+... )
     \end{minted}
   \item[]<4-> \begin{minted}{python}
 >>> value()
@@ -366,8 +368,8 @@ calling f with a=3, b=3
 \begin{frame}[fragile]{Reducing the Graph}
   \begin{itemize}
   \item[]<1-> \begin{minted}{python}
->>> a = CellThunk(1)
->>> b = CellThunk(2)
+>>> a = 1
+>>> b = 2
     \end{minted}
   \item[]<2-> \begin{minted}{python}
 >>> sub_expression_1 = CellThunk(f, a, b)
@@ -377,10 +379,10 @@ calling f with a=3, b=3
     \end{minted}
   \item[]<4-> \begin{minted}{python}
 >>> result = CellThunk(
-      f,
-      sub_expression_1,
-      sub_expression_2,
-)
+...     f,
+...     sub_expression_1,
+...     sub_expression_2,
+... )
     \end{minted}
   \item[]<5-> \begin{minted}{python}
 >>> result()
@@ -417,8 +419,8 @@ def memoized_thunk(code, *args, **kwargs):
 \begin{frame}[fragile]{Reducing the Graph}
   \begin{itemize}
   \item[]<1-> \begin{minted}{python}
->>> a = memoized_thunk(1)
->>> b = memoized_thunk(2)
+>>> a = 1
+>>> b = 2
     \end{minted}
   \item[]<2-> \begin{minted}{python}
 >>> sub_expression_1 = memoized_thunk(f, a, b)
@@ -428,10 +430,10 @@ def memoized_thunk(code, *args, **kwargs):
     \end{minted}
   \item[]<4-> \begin{minted}{python}
 >>> result = memoized_thunk(
-      f,
-      sub_expression_1,
-      sub_expression_2,
-)
+...     f,
+...     sub_expression_1,
+...     sub_expression_2,
+... )
     \end{minted}
   \item[]<5-> \begin{minted}{python}
 >>> result()
@@ -520,13 +522,14 @@ def lazy_fib(n):
 
 \begin{frame}{Further Work}
   \begin{itemize}
-  \item[]<2-> lazy\_python
+  \item[]<2-> dask.delayed
     \begin{itemize}
-    \item[] Implementation of Cell Model thunks for Python
+    \item[] Defers execution to build up a graph to execute in parallel.
     \end{itemize}
-  \item[]<3-> daisy
+  \item[]<3-> Blaze
     \begin{itemize}
-    \item[] Uses lazy\_python to execute Python programs in parallel with Dask.
+    \item[] Defers execution to execute expressions against different backends
+      (numpy, SQL, Mongo, etc).
     \end{itemize}
   \item[]<4-> Poster Session
   \end{itemize}
